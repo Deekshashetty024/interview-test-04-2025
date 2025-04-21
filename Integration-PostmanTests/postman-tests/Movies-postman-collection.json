@@ -1,0 +1,499 @@
+{
+	"info": {
+		"_postman_id": "0f28e7c6-8069-43c0-bf1d-b647fe754ca2",
+		"name": "Kmbal Movies",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32875715"
+	},
+	"item": [
+		{
+			"name": "Movies",
+			"item": [
+				{
+					"name": "Reviews",
+					"item": [
+						{
+							"name": "Index",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_BASE_URL}}/v1/movies/{{MOVIE_ID}}/reviews",
+									"host": [
+										"{{API_BASE_URL}}"
+									],
+									"path": [
+										"v1",
+										"movies",
+										"{{MOVIE_ID}}",
+										"reviews"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Store",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const statusCode = pm.response.code;",
+											"const responseJson = pm.response.json();",
+											"    //Testcase 1",
+											"if (statusCode === 200) {",
+											"    // Assertions for the first successful submission",
+											"    pm.test(\"Status code is 200 OK\", function () {",
+											"        pm.expect(statusCode).to.eql(200);",
+											"    });",
+											"",
+											"    pm.test(\"Response body contains review text\", function () {",
+											"        pm.expect(responseJson.review).to.eql(\"This is an excellent movie!\"); ",
+											"    });",
+											"",
+											"    pm.test(\"Response body contains rating\", function () {",
+											"        pm.expect(responseJson.rating).to.eql(3);",
+											"    });",
+											"",
+											"        pm.test(\"Response body has movie ID\", function () {",
+											"            pm.expect(responseJson.movie_id).to.eql(parseInt(pm.environment.get(\"MOVIE_ID\")));",
+											"        });",
+											"",
+											"        pm.test(\"Response body has user ID\", function () {",
+											"            pm.expect(responseJson.user_id).to.be.a('number');",
+											"        });",
+											"        //Testcase 2",
+											"} else if (statusCode === 409) {",
+											"    // Assertions for the duplicate submission",
+											"    pm.test(\"Second submission returned 409 Conflict\", function () {",
+											"        pm.expect(statusCode).to.eql(409);",
+											"    });",
+											"",
+											"    pm.test(\"Response body contains duplicate error message\", function () {",
+											"        pm.expect(responseJson.message).to.include(\"You have already submitted a review for this movie.\");",
+											"    });",
+											"",
+											"    pm.test(\"Response body does not contain review details\", function () {",
+											"        pm.expect(responseJson.review).to.be.undefined;",
+											"        pm.expect(responseJson.rating).to.be.undefined;",
+											"        pm.expect(responseJson.movie_id).to.be.undefined;",
+											"        pm.expect(responseJson.user_id).to.be.undefined;",
+											"    });",
+											"} else {",
+											"    // Fail the test if the status code is unexpected",
+											"    pm.test(\"Unexpected status code\", function () {",
+											"        pm.expect.fail(`Received unexpected status code: ${statusCode}`);",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"rating\": 3,\n    \"review\": \"This is an excellent movie!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_BASE_URL}}/v1/movies/{{MOVIE_ID}}/reviews",
+									"host": [
+										"{{API_BASE_URL}}"
+									],
+									"path": [
+										"v1",
+										"movies",
+										"{{MOVIE_ID}}",
+										"reviews"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_BASE_URL}}/v1/movies/{{MOVIE_ID}}/reviews/{{REVIEW_ID}}",
+									"host": [
+										"{{API_BASE_URL}}"
+									],
+									"path": [
+										"v1",
+										"movies",
+										"{{MOVIE_ID}}",
+										"reviews",
+										"{{REVIEW_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"rating\": 4,\n    \"review\": \"Pretty good!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_BASE_URL}}/v1/movies/{{MOVIE_ID}}/reviews/{{REVIEW_ID}}",
+									"host": [
+										"{{API_BASE_URL}}"
+									],
+									"path": [
+										"v1",
+										"movies",
+										"{{MOVIE_ID}}",
+										"reviews",
+										"{{REVIEW_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Destroy",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_BASE_URL}}/v1/movies/{{MOVIE_ID}}/reviews/{{REVIEW_ID}}",
+									"host": [
+										"{{API_BASE_URL}}"
+									],
+									"path": [
+										"v1",
+										"movies",
+										"{{MOVIE_ID}}",
+										"reviews",
+										"{{REVIEW_ID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Index",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_BASE_URL}}/v1/movies",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"v1",
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_BASE_URL}}/v1/movies/1",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"v1",
+								"movies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "QA",
+			"item": [
+				{
+					"name": "Create Test User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_BASE_URL}}/qa/createTestUser",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"qa",
+								"createTestUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Destroy All Test Users",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_BASE_URL}}/qa/destroyAllTestUsers",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"qa",
+								"destroyAllTestUsers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();",
+							"",
+							"pm.collectionVariables.set('API_TOKEN', response.token);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{USER_EMAIL}}\",\n    \"password\": \"{{USER_PASSWORD}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_BASE_URL}}/v1/login",
+					"host": [
+						"{{API_BASE_URL}}"
+					],
+					"path": [
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.unset('API_TOKEN');",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{API_BASE_URL}}/v1/logout",
+					"host": [
+						"{{API_BASE_URL}}"
+					],
+					"path": [
+						"v1",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{API_TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "API_BASE_URL",
+			"value": "http://localhost:8000/api",
+			"type": "string"
+		},
+		{
+			"key": "USER_EMAIL",
+			"value": "example@user.com",
+			"type": "string"
+		},
+		{
+			"key": "USER_PASSWORD",
+			"value": "Demo@123",
+			"type": "string"
+		},
+		{
+			"key": "API_TOKEN",
+			"value": ""
+		},
+		{
+			"key": "MOVIE_ID",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "REVIEW_ID",
+			"value": "1",
+			"type": "string"
+		}
+	]
+}
