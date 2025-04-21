@@ -29,8 +29,8 @@ to view it's description and reviews.
 Depending on the role you're applying for, you can find instructions in one of
 the following documents:
 
-- [Instructions (Web Developers)](./docs/instructions/WEB_DEVELPERS.md)
-- [Instructions (Mobile Developers)](./docs/instructions/MOBILE_DEVELPERS.md)
+- [Instructions (Web Developers)](./docs/instructions/WEB_DEVELOPERS.md)
+- [Instructions (Mobile Developers)](./docs/instructions/MOBILE_DEVELOPERS.md)
 - [Instructions (QAs)](./docs/instructions/QA.md)
 
 If you have any questions, please contact ben@kmbal.com or malik@kmbal.com.

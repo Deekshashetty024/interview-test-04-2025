@@ -14,8 +14,9 @@ user to submit a review for a movie they have already reviewed.
 
 ## Submission
 
-Please raise a PR against **you own fork** and email a link to ben@kmbal.com and
-malik@kmbal.com.
+Please commit your changes and push them to GitHub. Once you've pushed your changes,
+please send a link to your branch to ben@kmbal.com and malik@kmbal.com. Candidates
+are requested **not to raise a pull request** against the main repository.
 
 ## Developer Guidance
 
